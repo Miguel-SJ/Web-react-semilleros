@@ -89,3 +89,12 @@ td{padding:.55rem .5rem;border-bottom:1px solid var(--line)}
   .side nav{flex-direction:row;flex-wrap:wrap;order:3;flex-basis:100%} .me{flex-direction:row;align-items:center;margin-left:auto}
   .login{grid-template-columns:1fr} .login-hero{padding:2rem} .row2{grid-template-columns:1fr} .accounts li{grid-template-columns:1fr auto}
 }
+
+/* formularios largos y acciones peligrosas */
+textarea{width:100%;padding:.55rem .7rem;border:1px solid var(--line);border-radius:10px;font:inherit;min-height:90px;resize:vertical}
+.btn.danger{color:var(--red);border-color:#f2b8b3} .btn.danger:hover:not(:disabled){background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.form-page{max-width:780px}
+.rows{display:grid;gap:.6rem;margin-bottom:.8rem} .rows .row2{grid-template-columns:1fr 1.6fr auto;align-items:center}
+.checks{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:.4rem;display:grid;gap:.1rem;margin-bottom:.8rem}
+.checks label{flex-direction:row;align-items:center;gap:.6rem;margin:0;padding:.35rem .5rem;border-radius:8px;cursor:pointer;color:var(--ink);font-weight:400} .checks label:hover{background:var(--tint)} .checks input{width:auto}
+.actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem}

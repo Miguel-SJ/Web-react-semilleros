@@ -18,3 +18,8 @@ npm run dev              # http://localhost:5173
 ## Desplegar (Vercel o Netlify)
 Build `npm run build`, carpeta `dist`, variable `VITE_API_URL`. Ya incluye `vercel.json` y `public/_redirects` para las rutas de React Router.
 En Render (API) puedes limitar CORS con la variable `CORS_ORIGIN=https://tu-sitio.vercel.app`.
+
+## Roles y permisos
+- **Estudiante:** asociarse/salir de semilleros, inscribirse/desinscribirse de eventos, crear proyectos.
+- **Docente:** crear semilleros y eventos, cambiar estado (Próximo/Finalizado/Cancelado) o eliminar sus eventos, cambiar estado de proyectos que asesora, ver Reportes.
+- **Administrador:** todo lo anterior salvo reportes, más eliminar semilleros y gestionar cuentas.

@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api, errorMessage, nombreCompleto } from '../api/client'
+import { useAuth } from '../context/AuthContext'
 import { Badge, Empty, ErrorBox, Loading, PageHead, estadoTone, useDebounced } from '../components/ui'
 
 export default function Semilleros() {
+  const { isDocente, isAdmin } = useAuth()
   const [f, setF] = useState({ q: '', facultad: '', area: '', linea: '' })
   const [lista, setLista] = useState(null)
   const [opc, setOpc] = useState({ facultades: [], areas: [], lineas: [] })
@@ -37,7 +39,9 @@ export default function Semilleros() {
 
   return (
     <>
-      <PageHead kicker="Directorio" title="Semilleros de investigación" />
+      <PageHead kicker="Directorio" title="Semilleros de investigación">
+        {(isDocente || isAdmin) && <Link className="btn primary" to="/semilleros/nuevo">+ Nuevo semillero</Link>}
+      </PageHead>
       <div className="filters">
         <input className="grow" placeholder="Buscar por semillero, docente, línea o integrante…" value={f.q} onChange={(e) => setF({ ...f, q: e.target.value })} />
         <select value={f.facultad} onChange={(e) => setF({ ...f, facultad: e.target.value })}><option value="">Todas las facultades</option>{opc.facultades.map((x) => <option key={x}>{x}</option>)}</select>

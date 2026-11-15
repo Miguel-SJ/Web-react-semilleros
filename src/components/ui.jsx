@@ -19,7 +19,7 @@ export const Badge = ({ tone = 'blue', children }) => <span className={`badge ${
 export const estadoTone = (e) => {
   const t = String(e).toLowerCase()
   if (t.includes('ejecu') || t === 'true' || t === 'activo' || t === 'activa') return 'green'
-  if (t.includes('final')) return 'blue'
+  if (t.includes('final') || t.includes('próximo') || t.includes('proximo')) return 'blue'
   if (t.includes('cancel') || t === 'false' || t.includes('inactiv') || t.includes('suspend')) return 'red'
   return 'amber'
 }

@@ -11,12 +11,12 @@ export const Sprout = ({ size = 26 }) => (
 )
 
 export default function Layout() {
-  const { user, logout, isAdmin } = useAuth()
+  const { user, logout, isAdmin, isDocente } = useAuth()
   const links = [
     ['/semilleros', 'Semilleros'],
     ['/proyectos', 'Proyectos'],
     ['/eventos', 'Eventos'],
-    ['/reportes', 'Reportes'],
+    ...(isDocente ? [['/reportes', 'Reportes']] : []),
     ...(isAdmin ? [['/cuentas', 'Cuentas']] : [])
   ]
   return (

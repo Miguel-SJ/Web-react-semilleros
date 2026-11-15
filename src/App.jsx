@@ -8,6 +8,9 @@ import Proyectos from './pages/Proyectos'
 import Eventos from './pages/Eventos'
 import Reportes from './pages/Reportes'
 import Cuentas from './pages/Cuentas'
+import SemilleroNuevo from './pages/SemilleroNuevo'
+import EventoNuevo from './pages/EventoNuevo'
+import ProyectoNuevo from './pages/ProyectoNuevo'
 
 export default function App() {
   return (
@@ -19,7 +22,16 @@ export default function App() {
           <Route path="/semilleros/:id" element={<SemilleroDetalle />} />
           <Route path="/proyectos" element={<Proyectos />} />
           <Route path="/eventos" element={<Eventos />} />
-          <Route path="/reportes" element={<Reportes />} />
+          <Route element={<ProtectedRoute roles={['docente', 'administrador']} />}>
+            <Route path="/semilleros/nuevo" element={<SemilleroNuevo />} />
+            <Route path="/eventos/nuevo" element={<EventoNuevo />} />
+          </Route>
+          <Route element={<ProtectedRoute roles={['estudiante']} />}>
+            <Route path="/proyectos/nuevo" element={<ProyectoNuevo />} />
+          </Route>
+          <Route element={<ProtectedRoute roles={['docente']} />}>
+            <Route path="/reportes" element={<Reportes />} />
+          </Route>
           <Route element={<ProtectedRoute roles={['administrador']} />}>
             <Route path="/cuentas" element={<Cuentas />} />
           </Route>

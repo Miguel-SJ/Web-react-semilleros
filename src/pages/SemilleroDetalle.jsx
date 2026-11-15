@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { api, errorMessage, fmtDia, nombreCompleto } from '../api/client'
 import { useAuth } from '../context/AuthContext'
 import { Badge, ErrorBox, Loading, Ok, PageHead, estadoTone } from '../components/ui'
 
 export default function SemilleroDetalle() {
   const { id } = useParams()
-  const { user, isEstudiante, isGestor } = useAuth()
+  const { user, isEstudiante, isGestor, isAdmin } = useAuth()
+  const nav = useNavigate()
   const uid = user._id || user.id
   const [s, setS] = useState(null)
   const [err, setErr] = useState('')
@@ -22,6 +23,13 @@ export default function SemilleroDetalle() {
   async function accion(fn, mensaje) {
     setBusy(true); setErr(''); setOk('')
     try { await fn(); setOk(mensaje); await cargar() } catch (e) { setErr(errorMessage(e)) } finally { setBusy(false) }
+  }
+
+  async function eliminar() {
+    if (!window.confirm(`¿Eliminar el semillero "${s.nombre}" y sus eventos? Esta acción no se puede deshacer.`)) return
+    setBusy(true); setErr('')
+    try { await api.delete(`/semilleros/${id}`); nav('/semilleros', { replace: true }) }
+    catch (e) { setErr(errorMessage(e)); setBusy(false) }
   }
 
   if (!s) return err ? <ErrorBox msg={err} onRetry={cargar} /> : <Loading />
@@ -42,6 +50,7 @@ export default function SemilleroDetalle() {
             {s.estado ? 'Desactivar' : 'Activar'}
           </button>
         )}
+        {isAdmin && <button className="btn danger" disabled={busy} onClick={eliminar}>Eliminar semillero</button>}
       </PageHead>
       <ErrorBox msg={err} /><Ok msg={ok} />
       <div className="two">

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { api, errorMessage, fmtDia, nombreCompleto } from '../api/client'
 import { useAuth } from '../context/AuthContext'
 import { Badge, Empty, ErrorBox, Loading, Ok, PageHead, estadoTone, useDebounced } from '../components/ui'
@@ -6,7 +7,7 @@ import { Badge, Empty, ErrorBox, Loading, Ok, PageHead, estadoTone, useDebounced
 const ESTADOS = ['En Propuesta', 'En ejecucion', 'Finalizado', 'Cancelado']
 
 export default function Proyectos() {
-  const { user, isGestor } = useAuth()
+  const { user, isGestor, isEstudiante } = useAuth()
   const uid = user._id || user.id
   const [f, setF] = useState({ q: '', estado: '', desde: '', hasta: '' })
   const [lista, setLista] = useState(null)
@@ -34,7 +35,9 @@ export default function Proyectos() {
 
   return (
     <>
-      <PageHead kicker="Investigación" title="Proyectos" />
+      <PageHead kicker="Investigación" title="Proyectos">
+        {isEstudiante && <Link className="btn primary" to="/proyectos/nuevo">+ Nuevo proyecto</Link>}
+      </PageHead>
       <div className="filters">
         <input className="grow" placeholder="Buscar por título…" value={f.q} onChange={(e) => setF({ ...f, q: e.target.value })} />
         <select value={f.estado} onChange={(e) => setF({ ...f, estado: e.target.value })}><option value="">Todos los estados</option>{ESTADOS.map((x) => <option key={x}>{x}</option>)}</select>
